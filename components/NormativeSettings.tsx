@@ -28,67 +28,68 @@ export const NormativeSettings: React.FC = () => {
   };
 
   return (
-    <div className="p-8 max-w-4xl mx-auto">
-      <div className="flex items-center justify-between mb-8">
-        <h2 className="text-2xl font-bold text-slate-800">Configuración Normativa</h2>
-        <button 
-          onClick={() => setViewState(ViewState.DASHBOARD)}
-          className="text-slate-500 hover:text-slate-700"
-        >
-          &larr; Volver
-        </button>
-      </div>
+    <div className="min-h-screen bg-[#F5F5F7] p-8">
+      <div className="max-w-2xl mx-auto">
+        <div className="flex items-center gap-4 mb-8">
+           <button 
+            onClick={() => setViewState(ViewState.DASHBOARD)}
+            className="w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center text-gray-500 hover:text-black transition-colors"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7 7-7" /></svg>
+          </button>
+          <h2 className="text-2xl font-bold text-[#1d1d1f]">Configuración</h2>
+        </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 mb-6">
-        <div className="flex items-start gap-4 mb-4">
-          <div className="p-3 bg-blue-50 text-blue-600 rounded-lg">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold text-slate-800">Cuerpos Legales de Contexto</h3>
-            <p className="text-slate-500 text-sm mt-1">
-              Sube aquí los archivos PDF o de texto que contengan las leyes (CPC, Código Civil, Autos Acordados) que la IA debe utilizar para calcular plazos y responder consultas.
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden mb-6">
+          <div className="p-6 border-b border-gray-100">
+            <h3 className="text-lg font-semibold text-[#1d1d1f]">Biblioteca Legal</h3>
+            <p className="text-sm text-gray-500 mt-1">
+              Los documentos que subas aquí formarán la base de conocimiento de Lex.
             </p>
           </div>
-        </div>
 
-        <div className="mt-6">
-          <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-slate-300 border-dashed rounded-lg cursor-pointer bg-slate-50 hover:bg-slate-100 transition-colors">
-            <div className="flex flex-col items-center justify-center pt-5 pb-6">
-              <svg className="w-8 h-8 mb-4 text-slate-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
-              </svg>
-              <p className="mb-2 text-sm text-slate-500"><span className="font-semibold">Haz click para subir</span> o arrastra un archivo</p>
-              <p className="text-xs text-slate-500">PDF, TXT (MAX. 10MB)</p>
-            </div>
-            <input type="file" className="hidden" onChange={handleFileUpload} accept=".pdf,.txt" disabled={isUploading} />
-          </label>
-          {isUploading && <p className="text-center text-blue-600 mt-2 text-sm font-medium animate-pulse">Procesando archivo...</p>}
-        </div>
-      </div>
-
-      <div className="grid gap-4">
-        {normativeDocs.length === 0 && (
-          <div className="text-center py-10 text-slate-400 italic">
-            No hay normativas cargadas. La IA usará conocimiento general.
-          </div>
-        )}
-        {normativeDocs.map(doc => (
-          <div key={doc.id} className="flex items-center justify-between p-4 bg-white border border-slate-200 rounded-lg hover:shadow-md transition-shadow">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-red-100 text-red-600 rounded flex items-center justify-center font-bold text-xs">
-                {doc.mimeType.includes('pdf') ? 'PDF' : 'TXT'}
+          <div className="p-6 bg-gray-50/50">
+            <label className="flex flex-col items-center justify-center w-full h-24 border border-dashed border-gray-300 rounded-xl cursor-pointer bg-white hover:bg-gray-50 transition-all group">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 bg-blue-50 text-[#007AFF] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4"/></svg>
+                </div>
+                <span className="text-sm font-medium text-gray-600 group-hover:text-[#007AFF]">Añadir Ley o Auto Acordado (PDF/TXT)</span>
               </div>
-              <span className="font-medium text-slate-700">{doc.name}</span>
-            </div>
-            <button 
-              onClick={() => removeNormativeDoc(doc.id)}
-              className="text-red-500 hover:text-red-700 text-sm font-medium px-3 py-1 rounded hover:bg-red-50"
-            >
-              Eliminar
-            </button>
+              <input type="file" className="hidden" onChange={handleFileUpload} accept=".pdf,.txt" disabled={isUploading} />
+            </label>
+            {isUploading && <p className="text-center text-[#007AFF] mt-2 text-xs font-medium animate-pulse">Procesando...</p>}
           </div>
-        ))}
+        </div>
+
+        <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3 ml-4">Documentos Activos</h4>
+        
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+          {normativeDocs.length === 0 ? (
+            <div className="p-8 text-center text-gray-400 text-sm italic">
+              No hay documentos. Lex usará su conocimiento base.
+            </div>
+          ) : (
+            <div className="divide-y divide-gray-100">
+              {normativeDocs.map(doc => (
+                <div key={doc.id} className="flex items-center justify-between p-4 hover:bg-gray-50 transition-colors group">
+                  <div className="flex items-center gap-4">
+                    <div className={`w-8 h-8 rounded flex items-center justify-center text-[10px] font-bold ${doc.mimeType.includes('pdf') ? 'bg-red-50 text-red-600' : 'bg-gray-100 text-gray-600'}`}>
+                      {doc.mimeType.includes('pdf') ? 'PDF' : 'TXT'}
+                    </div>
+                    <span className="text-sm font-medium text-gray-900">{doc.name}</span>
+                  </div>
+                  <button 
+                    onClick={() => removeNormativeDoc(doc.id)}
+                    className="text-gray-400 hover:text-red-500 p-2 rounded-full hover:bg-red-50 transition-all opacity-0 group-hover:opacity-100"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
